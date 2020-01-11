@@ -8,6 +8,7 @@ import glob
 import numbers
 import subprocess
 import telebot
+import asyncio
 # Importar desde librerias
 #from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler, ConversationHandler, CallbackQueryHandler)
 
@@ -42,7 +43,7 @@ def start(message):
 # Manejador correspondiente al comando /ayuda
 @bot.message_handler(commands=['ayuda'])
 def ayuda(message):
-    bot.reply_to(message,"Lista de comandos implementados: \n\n/inicio - Comando de inicio\n\n/ayuda - Consulta la lista de comandos implementados y la descripcion de estos\n\n/comandos - Consulta de forma rapida la lista de comandos implementados\n\n/apagar - Apaga el sistema\n\n/reiniciar - Reiniciar el sistema\n\n/red_conectada - Consulta el nombre de la red a la que esta conectado\n\n/ip - Consulta la IP del sistema\n\n/temp - Consulta la temperatura actual del SOC\n\n/fecha - Consulta la fecha del sistema\n\n/almacenamientos - Consulta los dispositivos de almacenamiento en el sistema\n\n/arquitectura - Consulta la arquitectura del SOC\n\n/kernel - Consulta la version del Kernel del sistema\n\n/pwd - Consulta la ruta actual del Script del Bot\n\n \temp_ambiente") # Respondemos al comando con el mensaje
+    bot.reply_to(message,"Lista de comandos implementados: \n\n/inicio - Comando de inicio\n\n/ayuda - Consulta la lista de comandos implementados y la descripcion de estos\n\n/comandos - Consulta de forma rapida la lista de comandos implementados\n\n/apagar - Apaga el sistema\n\n/reiniciar - Reiniciar el sistema\n\n/red_conectada - Consulta el nombre de la red a la que esta conectado\n\n/ip - Consulta la IP del sistema\n\n/temp - Consulta la temperatura actual del SOC\n\n/fecha - Consulta la fecha del sistema\n\n/almacenamientos - Consulta los dispositivos de almacenamiento en el sistema\n\n/arquitectura - Consulta la arquitectura del SOC\n\n/kernel - Consulta la version del Kernel del sistema\n\n/pwd - Consulta la ruta actual del Script del Bot\n\n /temp_ambiente") # Respondemos al comando con el mensaje
     print('ayuda')
 
 #\n/cd - Accede a un directorio especifico\n\n/ls - Lista los archivos de una ruta especifica\n\n/lsusb - Consulta los dispositivos USB conectados al sistema\n\n/montajes - Consulta los dispositivos montados en el sistema\n\n/borrar - Elimina un archivo o directorio\n\n/cat - Muestra el contenido de un archivo\n\n/ssh_on - Activa el servidor SSH\n\n/ssh_off - Detiene el servidor SSH\n\n/ssh_reiniciar - Reinicia el servidor SSH\n\n/ssh_estado - Consulta el estado actual del servidor SSH\n\n/vnc_on - Activa el servidor VNC\n\n/vnc_off - Detiene el servidor VNC\n\n/scriptfex - Genera el archivo script.fex del sistema y lo exporta\n\n/importar - Importa archivos al sistema\n\n/exportar - Exporta archivos del sistema\n\n/drivers - Consulta los Drivers activos en el sistema\n\n/descargar - Realiza la descarga desde una URL (wget)\n\n/buscar - Realiza una busqueda de archivos segun un termino de busqueda en una localizacion especificada
@@ -180,25 +181,25 @@ def cd(message, args):
 
 # Manejador correspondiente al comando /temp_ambiente
 @bot.message_handler(commands=['temp_ambiente'])
-def temp_ambiente(message):
-    amb = llamadaSistema("python /home/pi/Adafruit_Python_DHT/examples/simpletest.py") # Llamada al sistema
+async def temp_ambiente(message):
+    amb = await llamadaSistema("python /home/pi/Adafruit_Python_DHT/examples/simpletest.py") # Llamada al sistema
     bot.reply_to(message,amb) # Respondemos al comando con el mensaje
     #bot.send_message(ID,amb)
     print('temp_ambiente')
-    
+
 # Manejador correspondiente al comando /temp_ambiente
 @bot.message_handler(commands=['temp_ambiente_12'])
 def temp_ambiente_12(message):
     #bot.reply_to(message,_pwd) # Respondemos al comando con el mensaje
     tiempo=0
     while tiempo >= 43200 :
-        amb12 = llamadaSistema("python /home/pi/Adafruit_Python_DHT/examples/simpletest.py") 
+        amb12 = llamadaSistema("python /home/pi/Adafruit_Python_DHT/examples/simpletest.py")
         print('tiempo')
         bot.send_message(ID,amb12)
         time.sleep(tiempo)
         tiempo =tiempo + 900
-    print('temp_ambiente_12')    
-    
+    print('temp_ambiente_12')
+
 '''
 @bot.message_handler(commands=['temp_acua'])
 os.system('modprobe w1-gpio')
