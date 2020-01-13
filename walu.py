@@ -8,7 +8,7 @@ import glob
 import numbers
 import subprocess
 import telebot
-import asyncio
+
 # Importar desde librerias
 #from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler, ConversationHandler, CallbackQueryHandler)
 
@@ -181,8 +181,8 @@ def cd(message, args):
 
 # Manejador correspondiente al comando /temp_ambiente
 @bot.message_handler(commands=['temp_ambiente'])
-async def temp_ambiente(message):
-    amb = await llamadaSistema("python /home/pi/Adafruit_Python_DHT/examples/simpletest.py") # Llamada al sistema
+def temp_ambiente(message):
+    amb = llamadaSistema("python /home/pi/Adafruit_Python_DHT/examples/simpletest.py") # Llamada al sistema
     bot.reply_to(message,amb) # Respondemos al comando con el mensaje
     #bot.send_message(ID,amb)
     print('temp_ambiente')
