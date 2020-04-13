@@ -200,6 +200,53 @@ def temp_ambiente_12(message):
         tiempo =tiempo + 900
     print('temp_ambiente_12')
 
+# Manejador correspondiente al prender o apagar un rele
+GPIO.setup(12,GPIO.OUT)  
+
+@bot.message_handler(commands=['luz_on'])
+def luz_on(message):
+    GPIO.output(12,GPIO.HIGH)
+    amb = "Listo!"
+    bot.reply_to(message,amb) 
+    #bot.send_message(ID,amb)
+    print('luz_on')
+
+@bot.message_handler(commands=['luz_off'])
+def luz_off(message):
+    GPIO.output(12,GPIO.LOW)
+    amb = "Listo!"
+    bot.reply_to(message,amb)
+    #bot.send_message(ID,amb)
+    print('luz_off')
+
+# Manejador correspondiente al prender o apagar la guirnalda de luces
+GPIO.setup(11,GPIO.OUT)
+
+@bot.message_handler(commands=['lucecitas_on'])
+def light_on(message):
+    GPIO.output(11,GPIO.HIGH)
+    amb = "Listo!"
+    bot.reply_to(message,amb) 
+    #bot.send_message(ID,amb)
+    print('light_on')
+
+@bot.message_handler(commands=['lucecitas_off'])
+def light_off(message):
+    GPIO.output(11,GPIO.LOW)
+    amb = "Listo!"
+    bot.reply_to(message,amb)
+    #bot.send_message(ID,amb)
+    print('light_off')
+
+@bot.message_handler(commands=['all_off'])
+def all_off(message):
+    GPIO.output(12,GPIO.LOW)
+    GPIO.output(11,GPIO.LOW)
+    amb = "Listo, buenas noches <3 !"
+    bot.reply_to(message,amb)
+    #bot.send_message(ID,amb)
+    print('all_off')
+
 '''
 @bot.message_handler(commands=['temp_acua'])
 os.system('modprobe w1-gpio')
