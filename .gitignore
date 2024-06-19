@@ -8,6 +8,6 @@ __pycache__/
 .vscode/
 
 # Ignore the config file for the Bot
-./config.py
+config.py
 
 bot_log_*
