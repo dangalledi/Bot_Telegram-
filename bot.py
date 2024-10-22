@@ -4,7 +4,7 @@ import time
 import threading
 import telebot
 from config import TOKEN, ADMIN_ID
-from utils import obtener_ip
+from utils import llamadaSistema, obtener_ip
 from oled_display import actualizar_pantalla
 from handlers.admin_handler import admin
 from handlers.basic_commands import start, ping, fecha, comandos
@@ -67,9 +67,48 @@ def handle_minecraft(message):
     reset_pantalla_timer()
 
 @bot.callback_query_handler(func=lambda call: call.data in ["stop", "start", "detalle"])
-def handle_callback(call):
-    handle_docker_commands(bot, call)
+def handle_docker_commands(call):
+    print(f"Comando de Docker recibido: {call.data}")
+    
+    if call.data == "stop":
+        bot.send_message(call.message.chat.id, "Deteniendo el servidor de Docker...")
+        # Agrega tu lógica para detener el servidor de Docker
+    
+    elif call.data == "start":
+        bot.send_message(call.message.chat.id, "Iniciando el servidor de Docker...")
+        # Agrega tu lógica para iniciar el servidor de Docker
+    
+    elif call.data == "detalle":
+        bot.send_message(call.message.chat.id, "Mostrando detalles del servidor de Docker...")
+        # Agrega tu lógica para mostrar los detalles
+    
     reset_pantalla_timer()
+
+@bot.callback_query_handler(func=lambda call: call.data in ["ip", "status", "pwd", "ls"])
+def handle_system_commands(call):
+    print(f"Comando del sistema recibido: {call.data}")
+    
+    if call.data == "ip":
+        # Mostrar la IP
+        ip_address = obtener_ip()
+        bot.send_message(call.message.chat.id, f"IP del sistema: {ip_address}")
+    
+    elif call.data == "status":
+        # Mostrar estado del sistema (puedes mover tu función status aquí)
+        status_info = llamadaSistema("top -bn1 | grep 'Cpu(s)'")
+        bot.send_message(call.message.chat.id, f"Estado del sistema: {status_info}")
+    
+    elif call.data == "pwd":
+        # Mostrar el directorio actual
+        current_dir = llamadaSistema("pwd")
+        bot.send_message(call.message.chat.id, f"Directorio actual: {current_dir}")
+    
+    elif call.data == "ls":
+        # Mostrar los archivos en el directorio actual
+        files = llamadaSistema("ls")
+        bot.send_message(call.message.chat.id, f"Archivos:\n{files}")
+    
+    reset_pantalla_timer()  # Para manejar la pantalla
 
 # Mantener la dirección IP en la pantalla hasta que haya interacción con el bot
 pantalla_timer = None

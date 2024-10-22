@@ -9,7 +9,8 @@ def admin(bot, message):
     username = message.from_user.username
     log_action(username, '/admin')  # Registrar la acción
     print(f"admin -> El mensaje fue enviado por el usuario con nombre de usuario: {username}")
-    if message.from_user.id == ADMIN_ID:  # Solo hacer caso si quien le habla es el remitente correspondiente a dicha ID
+    print(f"User ID: {message.from_user.id}, Admin ID: {ADMIN_ID}")  # Depuración para verificar IDs
+    if message.from_user.id == ADMIN_ID:
         bot.send_message(message.chat.id, "Elige un comando para ejecutar:", reply_markup=gen_markup_admin())
         actualizar_pantalla("Acceso admin")
     else:

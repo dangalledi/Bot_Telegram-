@@ -1,11 +1,25 @@
-# Ignore compiled Python bytecode files
-*.pyc
-# Ignore Python cache directories
+# Entorno virtual
+venv/
+Venv/
+ENV/
+env/
+venv.bak/
+
+# Archivos temporales de Python
 __pycache__/
-# Ignore environment-specific settings
-.env
-# Ignore editor-specific files
+*.py[cod]
+*.pyo
+*.pyd
+
+# Archivos de configuración de IDE
 .vscode/
+.idea/
+
+# Archivos de log
+*.log
+
+# Archivos de sistema
+.DS_Store
 
 # Ignore the config file for the Bot
 config.py
