@@ -1,16 +1,16 @@
 # handlers/admin_handler.py
 
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-from config import ADMIN_ID
 from oled_display import actualizar_pantalla
 from logger import log_action
+import os
 
 def admin(bot, message):
     username = message.from_user.username
     log_action(username, '/admin')  # Registrar la acción
     print(f"admin -> El mensaje fue enviado por el usuario con nombre de usuario: {username}")
-    print(f"User ID: {message.from_user.id}, Admin ID: {ADMIN_ID}")  # Depuración para verificar IDs
-    if message.from_user.id == ADMIN_ID:
+    print(f"User ID: {message.from_user.id}, Admin ID: {os.getenv('ADMIN_ID')}")  # Depuración para verificar IDs
+    if message.from_user.id == os.getenv('ADMIN_ID'):
         bot.send_message(message.chat.id, "Elige un comando para ejecutar:", reply_markup=gen_markup_admin())
         actualizar_pantalla("Acceso admin")
     else:
